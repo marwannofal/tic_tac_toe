@@ -1,28 +1,119 @@
-body{
-    background: #020024;
-    background:
-        linear-gradient(90deg,rgba(2, 0, 36, 1) 0%,
-            rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    color: white;
-    font-family: "Permanent Marker", cursive;
-    text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+:root {
+  --primary-dark: #020024;
+  --primary-mid: #090979;
+  --primary-light: #00d4ff;
+  --accent-glow: rgba(0, 212, 255, 0.7);
 }
-.cell{
-    margin: auto;
-    width: 75px;
-    height: 75px;
-    border: 2px solid;
-    box-shadow: 0 0 0 2px;
-    line-height: 75px;
-    font-size: 50px;
-    cursor: pointer;
+
+/* Global reset & smooth transitions */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
 }
-#gameContainer{
-    text-align: center;
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary-mid) 35%, var(--primary-light) 100%);
+  color: #fff;
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
 }
-#cellContainer{
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    width: 225px;
-    margin: auto;
+
+/* Container responsive width */
+#gameContainer {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Title */
+h1 {
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+}
+
+/* Status text */
+#statusText {
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
+
+/* Grid auto-scales with viewport */
+#cellContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.5rem, 2vw, 1rem);
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto 2rem;
+}
+
+/* Fluid, square cells with hover glow */
+.cell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,0.4),
+    0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.cell::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.cell:hover::before {
+  opacity: 0.3;
+  transform: scale(1);
+}
+
+.cell:hover {
+  transform: scale(1.05);
+}
+
+/* Restart button responsive */
+#restartBtn {
+  padding: clamp(0.5rem, 2.5vw, 0.75rem) clamp(1rem, 5vw, 1.75rem);
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(45deg, var(--primary-light), var(--primary-mid));
+  color: var(--primary-dark);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+#restartBtn:hover {
+  background: linear-gradient(45deg, var(--primary-mid), var(--primary-light));
+  transform: translateY(-2px);
 }
