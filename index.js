@@ -54,6 +54,8 @@ function checkWinner(){
             continue;
         }
         if(cellA == cellB && cellB == cellC){
+            const audio = new Audio('audio.mp3'); // Use the path to your audio file
+            audio.play();
             roundWon = true;
             break;
         }
